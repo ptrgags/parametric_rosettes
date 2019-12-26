@@ -1,7 +1,7 @@
 const MAX_X = 2.0;
 const PERIOD = 800;
 const THICKNESS = 3.0;
-let pattern = ROSETTES["8k + 3"];
+let pattern = ROSETTES["2k + 1"];
 let curve = [];
 let start_frame = 0;
 let display_arm = true;
