@@ -4,6 +4,7 @@ const THICKNESS = 3.0;
 let pattern = ROSETTES["8k + 3"];
 let curve = [];
 let start_frame = 0;
+let display_arm = true;
 
 function make_select() {
     const sel = createSelect();
@@ -101,8 +102,17 @@ function draw() {
     strokeJoin(ROUND);
     stroke(71, 142, 204);
     draw_polyline(curve, frame >= PERIOD);
-    stroke(255);
-    draw_polyline(sums, false);
+    
+    if (display_arm) {
+        stroke(255);
+        draw_polyline(sums, false);
+    }
     
     pop();
+}
+
+function keyReleased() {
+    if (key === ' ') {
+        display_arm = !display_arm;
+    }
 }
