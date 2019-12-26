@@ -16,14 +16,54 @@ function make_select() {
 
 function change_rosette(e) {
     const selected = e.target.value;
-    pattern = ROSETTES[selected];
+    set_pattern(ROSETTES[selected]);
+}
+
+function make_input_box() {
+    const input = createInput();
+    input.position(100, 10);
+    input.attribute('placeholder', 'freq1,amp1,phase1:freq2,amp2,phase2:...');
+    input.style('width: 300');
+    input.changed(custom_string_changed);
+}
+
+function set_pattern(series) {
+    pattern = series;
     curve = [];
     start_frame = frameCount;
+    clear_error();
+    display_params();
+}
+
+function display_params() {
+    const triples = pattern.to_string().replace(/:/g, "<br/>");
+    const value = `Current parameters (frequency, amplitude, phase):<br/>${triples}`;
+    document.getElementById('params').innerHTML = value; 
+}
+
+function clear_error() {
+    document.getElementById('error').innerHTML = '';
+}
+
+function display_error(message) {
+    document.getElementById('error').innerHTML = message;
+}
+
+function custom_string_changed(e) {
+    try {
+        const new_pattern = FourierSeries.from_string(e.target.value);
+        set_pattern(new_pattern);
+    } catch(error) {
+        console.error(error);
+        display_error(error.message);
+    }
 }
 
 function setup() {
     createCanvas(500, 750);
     make_select();
+    make_input_box();
+    display_params();
     
     background(0);
     console.log(width);

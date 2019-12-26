@@ -18,10 +18,51 @@
           padding: 0; 
           margin: 0; 
           background-color: #333333;
+          color: #eeeeee;
       } 
+      
+      .error {
+          margin: 2px;
+          position: absolute;
+          color: red;
+          left: 500px;
+          top: 350px;
+      }
+      
+      .params {
+          position: absolute;
+          left: 500px;
+          top: 370px;
+          width: 400px;
+      }
+      
+      .info {
+          position: absolute;
+          left: 500px;
+          width: 400px;
+          top: 0px;
+          padding: 0;
+          margin: 0;
+      }
   </style>
 </head>
 
 <body>
+<p class="info">
+    This sketch can be used to generate curves created
+    by adding together various circular motions. Each joint of the 
+    drawing machine represents a circular motion with a frequency
+    (how fast it spins), amplitude (length of the joint), and phase
+    (starting angle).
+    <br/><br/>
+    Basic Usage: Use the dropdown in the top left to pick one of the
+    preset patterns I made, listed by symmetry type. 
+    <br/><br/>
+    Advanced Usage: Use the input box to type in frequencies, amplitudes
+    and phases. Then press Enter. <b>Note:</b> phases are listed as
+    multiples of pi
+</p>
+<span class="error" id="error"></span>
+<span class="params" id="params"></span>
 </body>
 </html>

@@ -63,13 +63,43 @@ class FourierSeries {
     /**
      * Shorthand string for representing a curve in the form
      * freq,amp,phase:freq,amp,phase:...
+     * note that phase is scaled so it is a multiple of pi
      */
     to_string() {
         let terms = [];
         for (const [frequency, amplitude, phase] of this.terms) {
-            const term_str = `${frequency},${amplitude},${phase}`;
+            const term_str = `${frequency},${amplitude},${phase / Math.PI}`;
             terms.push(term_str);
         }
         return terms.join(':');
+    }
+    
+    /**
+     * Load a pattern from a string in the same format as
+     * to_string()
+     */
+    static from_string(str) {
+        const terms = str.trim().split(':').map(term_str => {
+            const [freq_str, amp_str, phase_str] = term_str.split(',');
+            const freq = parseInt(freq_str);
+            const amp = parseFloat(amp_str);
+            const phase = parseFloat(phase_str) * Math.PI;
+            
+            if (!isFinite(freq)) {
+                throw new Error('frequency must be an integer');
+            }
+            
+            if (!isFinite(amp)) {
+                throw new Error('amplitude must be a real number'); 
+            }
+            
+            if (!isFinite(phase)) {
+                throw new Error('phase must be a real number'); 
+            }
+            
+            return [freq, amp, phase,]; 
+        }).sort();
+        
+        return new FourierSeries(terms);
     }
 }
